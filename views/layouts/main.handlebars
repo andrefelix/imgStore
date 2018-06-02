@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>imgStore</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<h1><a href="/">imgStore</a></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
+				{{{body}}}
+			</div>
+			<div class="col-sm-4">
+				{{> stats this}}
+
+				{{> popular this}}
+
+				{{> comments this}}
+			</div>
+		</div>
+	</div>
+
+	<div style="border-top: 1px solid #eee; padding-top: 1em;">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<p class="text-muted text-primary">imgStore | &copy; Copyright 2018, All Rights Reserved</p>
+					<p class="text-center text-primary">
+						<i class="fa fa-twitter-square fa-2x"></i>
+						<i class="fa fa-facebook-square fa-2x"></i>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/public/js/script.js"></script>
+</body>
+</html>
