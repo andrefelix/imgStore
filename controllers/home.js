@@ -1,7 +1,7 @@
 module.exports = {
 
 	index(req, res) {
-		res.send('GET home:index');
+		res.render('index');
 	}
 
 };

@@ -1,7 +1,7 @@
 module.exports = {
 
 	index(req, res) {
-		res.send(`GET image:index ${req.params.image_id}`);
+		res.render('image');
 	},
 	
 	create(req, res) {
