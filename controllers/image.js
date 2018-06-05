@@ -9,7 +9,7 @@ module.exports = {
 	},
 
 	like(req, res) {
-		res.send(`POST image:like ${req.params.image_id}`);
+		res.json({likes: 1});
 	},
 
 	comment(req, res) {
