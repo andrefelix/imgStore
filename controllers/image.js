@@ -1,6 +1,8 @@
+const sidebar = require('../helpers/sidebar');
+
 module.exports = {
 
-	// GET: /images/:image_id
+	// GET: '/images/:image_id'
 	index(req, res) {
 		const viewModel = {
 			image: {
@@ -12,7 +14,6 @@ module.exports = {
 				views: 0,
 				timestamp: Date.now()
 			},
-
 			comments: [
 				{
 					name: 'André Félix',
@@ -32,17 +33,22 @@ module.exports = {
 			]
 		};
 
-		res.render('image', viewModel);
+		sidebar(viewModel, (viewModel) => {
+			res.render('image', viewModel);
+		});
 	},
 	
+	// POST: '/images'
 	create(req, res) {
 		res.send('POST image:create');
 	},
 
+	// POST: '/images/:image_id/like'
 	like(req, res) {
 		res.json({likes: 1});
 	},
 
+	// POST: '/images/:imgae_id/comment'
 	comment(req, res) {
 		res.send(`POST image:comment ${req.params.image_id}`);
 	}

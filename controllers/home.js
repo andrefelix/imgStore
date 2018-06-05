@@ -1,3 +1,5 @@
+const sidebar = require('../helpers/sidebar');
+
 module.exports = {
 
 	// GET: '/'
@@ -30,7 +32,9 @@ module.exports = {
 			]
 		};
 
-		res.render('home', viewModel);
+		sidebar(viewModel, (viewModel) => {
+			res.render('home', viewModel);
+		});
 	}
 
 };
