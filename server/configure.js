@@ -16,7 +16,7 @@ module.exports = (app) => {
 	app.use(methodOverride());
 	app.use(cookieParser('some-secret-value-here'));
 
-	// routes: Módulo responsável pela configuração das rotas
+	// routes: module that configure routes
 	routes(app);
 
 	app.use('/public/', express.static(path.join(__dirname, '../public')));
@@ -26,8 +26,8 @@ module.exports = (app) => {
 
 	app.engine('handlebars', expressHandlebars.create({
 		defaultLayout: 'main',
-		layoutsDir: `${app.get('views')}/layouts`,
-		partialsDir: [`${app.get('views')}/partials`],
+		layoutsDir: app.get('views') + '/layouts',
+		partialsDir: [app.get('views') + '/partials'],
 		helpers: {
 			timeago: (timestamp) => {
 				return moment(timestamp).startOf('minute').fromNow();

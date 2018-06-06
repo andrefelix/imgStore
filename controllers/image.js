@@ -1,13 +1,17 @@
 const sidebar = require('../helpers/sidebar');
+const path = require('path');
+const fs = require('fs');
 
 module.exports = {
 
 	// GET: '/images/:image_id'
 	index(req, res) {
+		const imgId = req.params.image_id;
+
 		const viewModel = {
 			image: {
-				uniqueId: 1,
-				filename: 'sample4.png',
+				uniqueId: imgId,
+				filename: imgId,
 				title: 'Image 1 for sample',
 				description: 'Morena baixa com corpão',
 				likes: 0,
@@ -16,6 +20,7 @@ module.exports = {
 			},
 			comments: [
 				{
+					image_id: imgId,
 					name: 'André Félix',
 					comment: 'Essa moça parece ser bem nova',
 					email: 'afelixfreitas@gmail.com',
@@ -24,6 +29,7 @@ module.exports = {
 				},
 
 				{
+					image_id: imgId,
 					name: 'Andressa Félix',
 					comment: 'Engordei, culpa do meu irmão',
 					email: 'andressa@gmail.com',
@@ -40,7 +46,38 @@ module.exports = {
 	
 	// POST: '/images'
 	create(req, res) {
-		res.send('POST image:create');
+		const saveImage = () => {
+			const possible = 'abcdefghijklmnopqrstuvwyxz0123456789';
+			let imgUrl = '';
+
+			for (let i = 0; i < 6; i++)
+				imgUrl += possible.charAt(Math.floor(Math.random() * possible.length));
+
+			const file = req.files[0];
+			const mimetype = file.mimetype.split('/');
+			const ext = mimetype[1];
+			const tempPath = file.path;
+			const imgName = imgUrl + '.' + ext;
+			const targetPath = path.resolve(`./public/upload/${imgName}`);
+			const allowedExt = ['png', 'jpg', 'jpeg', 'gif'];
+
+			if (allowedExt.indexOf(ext) > -1) {
+				fs.rename(tempPath, targetPath, (err) => {
+					if (err) throw err;
+
+					res.redirect('/images/' + imgName);
+				});
+			}
+			else {
+				fs.unlink(tempPath, (err) => {
+					if (err) throw err;
+
+					res.status(500).json({'error': 'Only image files are allowed.'});
+				});
+			}
+		};
+
+		saveImage();
 	},
 
 	// POST: '/images/:image_id/like'
