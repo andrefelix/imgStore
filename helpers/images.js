@@ -1,32 +1,13 @@
+const Image = require('../models').Image;
+const assert = require('assert');
+
 module.exports = {
 	
-	popular() {
-		const images = [
-			{
-				uniqueId: 1,
-				filename: 'sample1.png',
-				title: 'Image 1 for sample',
-			},
+	popular: (callback) => {
+		Image.find({}, {}, {limit: 5, sort: {likes: -1}}, (err, images) => {
+			assert.equal(err, null);
 
-			{
-				uniqueId: 2,
-				filename: 'sample2.png',
-				title: 'Image 2 for sample',
-			},
-
-			{
-				uniqueId: 3,
-				filename: 'sample3.png',
-				title: 'Image 3 for sample',
-			},
-
-			{
-				uniqueId: 4,
-				filename: 'sample4.png',
-				title: 'Image 4 for sample',
-			}
-		];
-
-		return images;
+			callback(null, images);
+		});
 	}
 };

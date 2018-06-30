@@ -1,27 +1,26 @@
+const async = require('async');
+const Models = require('../models');
+const assert = require('assert');
+
 module.exports = {
-	newest() {
-		const comments = [
-			{
-				comment: 'Mulher linda, mulher formosa',
-				name: 'André Félix',
-				timestamp: Date.now(),
-				image: {
-					uniqueId: 2,
-					filename: 'sample2.png',
-				}
-			},
+	newest: (callback) => {
+		Models.Comment.find({}, {}, {limit: 3, sort: {timestamp: -1}}, (err, comments) => {
+			assert.equal(err, null);
 
-			{
-				comment: 'Queria ser ela, mas sou gorda',
-				name: 'Andressa Chata',
-				timestamp: Date.now(),
-				image: {
-					uniqueId: 1,
-					filename: 'sample1.png',
-				}
-			},
-		];
+			const attachedImage = (comment, next) => {
+				Models.Image.findOne({_id: comment.image_id}, (err, image) => {
+					assert.equal(err, null);
 
-		return comments;
+					comment.image = image;
+					next(null);
+				});
+			};
+
+			async.each(comments, attachedImage, (err) => {
+				assert.equal(err, null);
+
+				callback(null, comments);
+			});
+ 		});
 	}
 };
